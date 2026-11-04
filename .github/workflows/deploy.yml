@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 name: Deploy to AWS EC2
 
 on:
   push:
     branches:
       - main
+=======
+name: Deploy to AWS EC2 -KA
+
+on:
+  push:
+    branches: [ main ]
+>>>>>>> 9e4adba1908fa1cfc366ebfb5d027a37b7ff2427
 
 jobs:
   deploy:
@@ -11,15 +19,23 @@ jobs:
 
     steps:
       - name: Checkout code
+<<<<<<< HEAD
         uses: actions/checkout@v4[cite: 1]
 
       - name: Set up SSH Key
         uses: webfactory/ssh-agent@v0.9.0[cite: 1]
+=======
+        uses: actions/checkout@v4
+
+      - name: Set up SSH Key
+        uses: webfactory/ssh-agent@v0.9.0
+>>>>>>> 9e4adba1908fa1cfc366ebfb5d027a37b7ff2427
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       - name: Deploy to EC2 via SSH
         env:
+<<<<<<< HEAD
           HOST: ${{ secrets.EC2_HOST }}
           USER: ${{ secrets.EC2_USER }}
           PAT: ${{ secrets.GH_PAT }}
@@ -33,3 +49,38 @@ jobs:
             pm2 restart all || pm2 start npm --name "tailwind-landing" -- start
             pm2 save
           EOF
+=======
+          HOST: ${{ vars.EC2_HOST }}
+          USER: ${{ secrets.EC2_USER }}
+          PAT_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $USER@$HOST << EOF
+            set -e
+
+            cd ~/my-react-app
+
+            git remote set-url origin https://$PAT_TOKEN@github.com/Kowsicanandd/react-landing-app.git
+
+            git reset --hard HEAD
+            git clean -fd -e node_modules
+            git config pull.rebase false
+            git pull origin main --allow-unrelated-histories -X theirs
+
+            cd tailwind-landing-page-template-main
+
+            npm install
+
+            NODE_OPTIONS="--max-old-space-size=512" npm run build
+
+            pm2 restart tailwind-landing || pm2 start npm --name "tailwind-landing" -- start
+
+            pm2 save
+          EOF
+
+      - name: Display Live Website URL
+        env:
+          HOST: ${{ vars.EC2_HOST }}
+        run: |
+          echo "Deployment completed successfully!"
+          echo "Live Website: http://$HOST"
+>>>>>>> 9e4adba1908fa1cfc366ebfb5d027a37b7ff2427

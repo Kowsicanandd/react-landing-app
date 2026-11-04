@@ -151,4 +151,8 @@ export default function HeroHome() {
       </div>
     </section>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9e4adba1908fa1cfc366ebfb5d027a37b7ff2427
