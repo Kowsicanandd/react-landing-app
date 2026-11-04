@@ -30,6 +30,7 @@ jobs:
 
             git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/Kowsicanandd/react-landing-app.git
 
+            git config pull.rebase false
             git pull origin main
 
             cd tailwind-landing-page-template-main
