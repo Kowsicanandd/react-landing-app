@@ -3,7 +3,7 @@ name: Deploy to AWS EC2
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
   deploy:
@@ -24,6 +24,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          timeout: "30s"
           script: |
             if [ ! -f /swapfile ]; then
               sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
@@ -39,6 +40,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          timeout: "60s"
           script: |
             cd ~/my-react-app/tailwind-landing-page-template-main || cd ~/tailwind-landing-page-template-main || cd ~
             git pull origin main
