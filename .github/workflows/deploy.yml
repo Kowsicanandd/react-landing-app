@@ -1,4 +1,3 @@
-
 name: Deploy to AWS EC2 -KA
 
 on:
@@ -29,9 +28,12 @@ jobs:
 
             cd ~/my-react-app
 
-            git remote set-url origin https://$PAT_TOKEN@github.com/Kowsicanandd/my-react-app.git
+            git remote set-url origin https://$PAT_TOKEN@github.com/Kowsicanandd/react-landing-app.git
 
-            git pull origin main
+            git reset --hard HEAD
+            git clean -fd
+            git config pull.rebase false
+            git pull origin main --allow-unrelated-histories -X theirs
 
             cd tailwind-landing-page-template-main
 
