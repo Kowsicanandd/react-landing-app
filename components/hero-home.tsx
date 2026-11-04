@@ -71,7 +71,7 @@ export default function HeroHome() {
               data-aos-delay={150}
             >
               The website builder you're <br className="max-lg:hidden" />
-              looking for
+              looking
             </h1>
             <div className="mx-auto max-w-3xl">
               <p
