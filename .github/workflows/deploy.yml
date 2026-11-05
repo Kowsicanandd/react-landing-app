@@ -39,7 +39,7 @@ jobs:
           USER: ${{ secrets.EC2_USER }}
           PAT_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          ssh -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
+          ssh -o StrictHostKeyChecking=no $USER@$HOST << EOF
             set -e
 
             cd ~/my-react-app
