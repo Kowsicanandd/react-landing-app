@@ -59,10 +59,9 @@ jobs:
             pm2 save
           EOF
 
-      - name: Add Live Website Link to Summary
+      - name: Display Live Website URL
         env:
           HOST: ${{ vars.EC2_HOST }}
         run: |
-          echo "### 🚀 Live Website" >> $GITHUB_STEP_SUMMARY
-          echo "Your app has been successfully deployed and is live at:" >> $GITHUB_STEP_SUMMARY
-          echo "[Open Live Website](http://$HOST)" >> $GITHUB_STEP_SUMMARY
+          echo "Deployment completed successfully!"
+          echo "Live Website: http://$HOST"
