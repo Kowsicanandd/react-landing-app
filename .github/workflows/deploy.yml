@@ -2,8 +2,7 @@ name: Deploy to AWS EC2
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -21,7 +20,7 @@ jobs:
       - name: Enable Swap Memory on EC2
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: ${{ vars.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           timeout: "30s"
@@ -35,21 +34,35 @@ jobs:
             free -h
 
       - name: Deploy to EC2 via SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          timeout: "60s"
-          script: |
-            cd ~/my-react-app/tailwind-landing-page-template-main || cd ~/tailwind-landing-page-template-main || cd ~
+        env:
+          HOST: ${{ vars.EC2_HOST }}
+          USER: ${{ secrets.EC2_USER }}
+          PAT_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
+            set -e
+
+            cd ~/my-react-app
+
+            git remote set-url origin https://$PAT_TOKEN@github.com/Kowsicanandd/my-react-app.git
+
             git pull origin main
-            npm install 
-            NODE_OPTIONS="--max-old-space-size=1024" npm run build
-            pm2 restart all || pm2 start npm --name "react-landing" -- start
+
+            cd tailwind-landing-page-template-main
+
+            npm install
+
+            NODE_OPTIONS="--max-old-space-size=512" npm run build
+
+            pm2 restart tailwind-landing || pm2 start npm --name "tailwind-landing" -- start
+
+            pm2 save
+          EOF
 
       - name: Add Live Website Link to Summary
+        env:
+          HOST: ${{ vars.EC2_HOST }}
         run: |
           echo "### 🚀 Live Website" >> $GITHUB_STEP_SUMMARY
           echo "Your app has been successfully deployed and is live at:" >> $GITHUB_STEP_SUMMARY
-          echo "[Open Live Website](http://${{ secrets.EC2_IP }})" >> $GITHUB_STEP_SUMMARY
+          echo "[Open Live Website](http://$HOST)" >> $GITHUB_STEP_SUMMARY
