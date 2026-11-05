@@ -44,6 +44,6 @@ jobs:
           script: |
             cd ~/my-react-app/tailwind-landing-page-template-main || cd ~/tailwind-landing-page-template-main || cd ~
             git pull origin main
-            npm install
+            npm install 
             NODE_OPTIONS="--max-old-space-size=1024" npm run build
             pm2 restart all || pm2 start npm --name "react-landing" -- start
