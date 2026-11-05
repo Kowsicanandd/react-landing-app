@@ -66,11 +66,11 @@ export default function HeroHome() {
               </div>
             </div>
             <h1
-              className="mb-6 border-y text-5xl font-bold [border-image:linear-gradient(to_right,transparent,--theme(--color-slate-300/.8),transparent)1] md:text-6xl"
+              className="mb-6 border-y text-5xl font-bold md:text-6xl"
               data-aos="zoom-y-out"
               data-aos-delay={150}
             >
-              The website builder you're <br className="max-lg:hidden" />
+              A website builder you&apos;re <br className="max-lg:hidden" />
               looking
             </h1>
             <div className="mx-auto max-w-3xl">
