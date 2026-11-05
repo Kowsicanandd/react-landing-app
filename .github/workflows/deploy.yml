@@ -47,3 +47,9 @@ jobs:
             npm install 
             NODE_OPTIONS="--max-old-space-size=1024" npm run build
             pm2 restart all || pm2 start npm --name "react-landing" -- start
+
+      - name: Add Live Website Link to Summary
+        run: |
+          echo "### 🚀 Live Website" >> $GITHUB_STEP_SUMMARY
+          echo "Your app has been successfully deployed and is live at:" >> $GITHUB_STEP_SUMMARY
+          echo "[Open Live Website](http://${{ secrets.EC2_HOST }})" >> $GITHUB_STEP_SUMMARY
