@@ -42,9 +42,10 @@ jobs:
           ssh -o StrictHostKeyChecking=no $USER@$HOST << EOF
             set -e
 
-            cd ~/my-react-app
+            cd ~/my-react-app 
 
-            git remote set-url origin https://$PAT_TOKEN@github.com/Kowsicanandd/my-react-app.git
+          
+            git remote set-url origin https://$PAT_TOKEN@github.com/Kowsicanandd/react-landing-app.git
 
             git pull origin main
 
