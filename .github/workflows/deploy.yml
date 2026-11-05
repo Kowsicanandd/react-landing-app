@@ -52,4 +52,4 @@ jobs:
         run: |
           echo "### 🚀 Live Website" >> $GITHUB_STEP_SUMMARY
           echo "Your app has been successfully deployed and is live at:" >> $GITHUB_STEP_SUMMARY
-          echo "[Open Live Website](http://${{ secrets.EC2_HOST }})" >> $GITHUB_STEP_SUMMARY
+          echo "[Open Live Website](http://34.201.15.216)" >> $GITHUB_STEP_SUMMARY
